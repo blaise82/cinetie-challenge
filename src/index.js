@@ -18,3 +18,5 @@ app.get('/', (req, res) => res.send('welcome to the challenge'));
 app.use(router);
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+
+export default app;
