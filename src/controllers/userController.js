@@ -3,6 +3,7 @@ import generator from 'generate-password';
 import { v4 as uuidv4 } from 'uuid';
 import Models from '../database/models';
 import { encode } from '../helpers/JWTOKEN';
+import sendEmail from '../helpers/sendEmail';
 
 class userController {
   static async login(req, res) {
@@ -54,7 +55,7 @@ class userController {
       });
 
       const hash = await bcrypt.hash(password, 10);
-      const newUser = await Models.Users.create({
+      await Models.Users.create({
         id: uuidv4(),
         type: 'admin',
         email,
@@ -63,12 +64,12 @@ class userController {
         isUpdated: false
       });
 
-      // const sendEmail = {
-      //   email
-      //   password
-      // };
+      const sendEmailData = {
+        email,
+        password
+      };
 
-      // sendVerificationEmail(verificationData);
+      sendEmail(sendEmailData);
 
       return res.status(201).json({
         status: 201,

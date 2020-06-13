@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 const validateId = (req, res, next) => {
   const Schemas = Joi.object().keys({
-    accommodationId: Joi.string().guid().error(() => ({
+    id: Joi.string().guid().required().error(() => ({
       message: 'An id is not provided'
     })),
   });
