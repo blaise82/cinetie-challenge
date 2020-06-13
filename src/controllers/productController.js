@@ -72,6 +72,44 @@ class userController {
       });
     }
   }
+
+  static async update(req, res) {
+    try {
+      const { body: { name, price, description }, query: { id } } = req;
+      const { Products } = Models;
+      const found = await Products.findOne({
+        where: {
+          id,
+        }
+      });
+      if (found) {
+        await Products.update({
+          name,
+          price,
+          description
+        }, {
+          where: {
+            id
+          },
+          returning: true,
+          plain: true
+        });
+        return res.status(200).json({
+          status: 200,
+          error: 'Product was update successfully'
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        error: 'Product not found'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
+  }
 }
 
 export default userController;

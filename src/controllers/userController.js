@@ -55,7 +55,7 @@ class userController {
       });
 
       const hash = await bcrypt.hash(password, 10);
-      const newUser = await Models.Users.create({
+      await Models.Users.create({
         id: uuidv4(),
         type: 'admin',
         email,

@@ -9,5 +9,6 @@ const router = express.Router();
 router.post('/add', checkLogin, productValidation, productController.add);
 router.get('/get-all', checkLogin, productController.getAll);
 router.delete('/delete', checkLogin, validateId, productController.delete);
+router.patch('/update', checkLogin, validateId, productValidation, productController.update);
 
 export default router;
