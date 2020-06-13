@@ -13,8 +13,8 @@ class userController {
         description,
         createdBy: id
       });
-      return res.status(200).json({
-        status: 200,
+      return res.status(201).json({
+        status: 201,
         message: 'A new product have been added'
       });
     } catch (error) {
@@ -96,7 +96,7 @@ class userController {
         });
         return res.status(200).json({
           status: 200,
-          error: 'Product was update successfully'
+          message: 'Product was update successfully'
         });
       }
       return res.status(404).json({

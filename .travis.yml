@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "12"
+before_install:
+  - npm install sequelize-cli -g 
+install: 
+  - npm install
+services:
+  - postgresql
+before_script:
+  - npm add sequelize-cli
+  - psql -c 'CREATE database snow_test;' -U postgres
+script: 
+  - npm test
+after_success: 
+  - npm run coverage
