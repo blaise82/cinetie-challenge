@@ -1,4 +1,6 @@
 import bcrypt from 'bcryptjs';
+import generator from 'generate-password';
+import { v4 as uuidv4 } from 'uuid';
 import Models from '../database/models';
 import { encode } from '../helpers/JWTOKEN';
 
@@ -36,7 +38,47 @@ class userController {
         token
       });
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
+  }
+
+  static async register(req, res) {
+    try {
+      const { email } = req.body;
+      const password = generator.generate({
+        length: 10,
+        numbers: true
+      });
+
+      const hash = await bcrypt.hash(password, 10);
+      const newUser = await Models.Users.create({
+        id: uuidv4(),
+        type: 'admin',
+        email,
+        password: hash,
+        isVerified: false,
+        isUpdated: false
+      });
+
+      // const sendEmail = {
+      //   email
+      //   password
+      // };
+
+      // sendVerificationEmail(verificationData);
+
+      return res.status(201).json({
+        status: 201,
+        message: 'A new user have been registered',
+        data: {
+          email,
+          password
+        }
+      });
+    } catch (error) {
       return res.status(500).json({
         status: 500,
         error: error.message
