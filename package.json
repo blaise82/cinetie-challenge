@@ -10,6 +10,10 @@
     "migrateTest": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
     "migrateDb": "node_modules/.bin/sequelize db:migrate && npm run seedDb",
     "seedDb": "node_modules/.bin/sequelize db:seed:all",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "clean": "rm -rf build && mkdir build",
+    "build-src": "babel -d ./build ./src -s",
+    "build": "npm run migrateDb && npm run clean && npm run build-src",
     "revertMigration": "node_modules/.bin/sequelize db:migrate:undo:all"
   },
   "repository": {
