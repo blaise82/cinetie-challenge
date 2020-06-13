@@ -5,7 +5,6 @@ class userController {
   static async add(req, res) {
     try {
       const { body: { name, price, description }, user: { id } } = req;
-      console.log(id);
       const { Products } = Models;
       await Products.create({
         id: uuidv4(),
@@ -17,6 +16,23 @@ class userController {
       return res.status(200).json({
         status: 200,
         message: 'A new product have been added'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
+  }
+
+  static async getAll(req, res) {
+    try {
+      const { Products } = Models;
+      const AllProducts = await Products.findAll();
+      return res.status(200).json({
+        status: 200,
+        message: 'Add products were retrieved successful',
+        data: AllProducts
       });
     } catch (error) {
       return res.status(500).json({
