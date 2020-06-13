@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node --require @babel/polyfill build/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
-    "test": "mocha --require @babel/register 'src/**/**spec.js'"
+    "test": "NODE_ENV=test npm run migrateTest && NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/polyfill --require @babel/register 'src/**/**spec.js'  --timeout 500000000 --exit",
+    "migrateTest": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
+    "migrateDb": "node_modules/.bin/sequelize db:migrate && npm run seedDb",
+    "seedDb": "node_modules/.bin/sequelize db:seed:all",
+    "revertMigration": "node_modules/.bin/sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
@@ -18,10 +23,20 @@
   },
   "homepage": "https://github.com/blaise82/let-it-snow-product#readme",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/polyfill": "^7.10.1",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nyc": "^15.1.0",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.12"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "sequelize-cli": "^5.5.1",
     "@babel/core": "^7.10.2",
     "@babel/node": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
@@ -32,5 +47,9 @@
     "eslint-plugin-import": "^2.21.2",
     "mocha": "^8.0.1",
     "nodemon": "^2.0.4"
+  },
+  "engines": {
+    "node": "12",
+    "npm": "6.13.4"
   }
 }

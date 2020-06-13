@@ -10,5 +10,8 @@
         "ecmaVersion": 11,
         "sourceType": "module"
     },
-    "rules": {}
+    "rules": {
+        "no-param-reassign": 0,
+        "comma-dangle": 0
+    }
 }
