@@ -41,6 +41,37 @@ class userController {
       });
     }
   }
+
+  static async delete(req, res) {
+    try {
+      const { query: { id } } = req;
+      const { Products } = Models;
+      const found = await Products.findOne({
+        where: {
+          id,
+        }
+      });
+      if (found) {
+        await Products.destroy({
+          where: {
+            id
+          }
+        }).then(() => res.status(200).json({
+          status: 200,
+          message: 'product have been deleted'
+        }));
+      }
+      return res.status(404).json({
+        status: 404,
+        error: 'Product not found'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
+  }
 }
 
 export default userController;
