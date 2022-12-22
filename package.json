@@ -40,7 +40,7 @@
     "express-validator": "^6.5.0",
     "generate-password": "^1.5.1",
     "joi": "^14.3.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mailgen": "^2.0.13",
     "nyc": "^15.1.0",
     "pg": "^8.2.1",
